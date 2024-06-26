@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    
+  <!-- navbar start -->
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/user/{{user.id}}">My Books </a>
+        <a class="nav-link" href="/books{{user.id}}">Books</a>
+        <a class="nav-link" href="/userstats">Stats</a>
+        <a class="nav-link active" href="/userprofile/{{user.id}}">{{user.name}} <span
+            class="sr-only">(current)</span></a>
+      </div>
+      <div class="d-flex align-items-center">
+        <a href="/login" class="btn btn-light">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <!-- navbar end -->
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- User Details Section -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/profile.jpg" class="card-img-top" alt="User Image" style="max-height: 250px; width: 100%; object-fit: contain;">
+                    <div class="card-body">
+                        <h5 class="card-title">Name: {{ user.name }}</h5>
+                        <p class="card-text"><strong>ID:</strong> {{ user.id }}</p>
+                        <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                        <p class="card-text"><strong>Role:</strong> {{ user.role }}</p>
+                        <!-- Add more user details here -->
+                    </div>
+                </div>
+            </div>
+            <!-- User's Issued Books Section -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Issued Books
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row font-weight-bold">
+                                <div class="col-md-1">ID</div>
+                                <div class="col-md-3">Book Name</div>
+                                <div class="col-md-3">Issue Date</div>
+                                <div class="col-md-3">Return Date</div>
+                                <div class="col-md-2">Status</div>
+                            </div>
+                        </li>
+                        {% for issue in user_issues %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <h6 class="mb-1">{{ issue.book_id }}</h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="mb-1">{{ issue.book.name }}</h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="mb-1">{{ issue.issue_date.strftime('%Y-%m-%d') }}</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="mb-1">{{ issue.return_date.strftime('%Y-%m-%d') if issue.return_date else 'N/A' }}</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p>{{ issue.status }}</p>
+                                </div>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">No books issued.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- footer-section-starts  -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; IITM BS Project by Avinash Shrivastava</span>
+    </div>
+  </footer>
+  <!-- footer-section-ends  -->
+
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

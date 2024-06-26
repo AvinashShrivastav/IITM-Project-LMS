@@ -1,0 +1,195 @@
+.main{
+
+    min-height: 100vh;
+    background:  #ececec;
+    padding:20px;
+}
+.btn-warning{
+  color: #fff;
+}
+
+/* Book listing in MyBooks */
+ 
+.book-listing{
+    margin: 20px;
+}
+table{
+    background-color: #fff;
+}
+
+
+
+/* Book cards  */
+
+.book-section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+  /* .book-card{
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  } */
+  .book-card{
+    display: flex;
+    background-color: #fff;
+    width: 500px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  .book-img{
+    width: 35%;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px;
+  }
+  .book-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .book-desc{
+    width: 260px;
+    height: 180px;
+    padding: 10px;
+    margin: 20px 0 20px 0;
+  }
+  .book-title{
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .book-author{
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .book-sec{
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+
+
+
+  /* user stats */
+.box img{
+    max-width: 95%;
+}
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    margin: 5%;
+    flex-direction: column;
+}
+.main-box{
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.2);
+    padding: 5%;
+}
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+
+
+/* book-sections */
+.card{
+  margin-top: 10px;
+  gap: 10px;
+  width: 300px;
+  height: 150px;
+
+}
+.sec-img{
+  background-color: rgba(33, 29, 29, 0.884);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-blend-mode: darken;
+  
+
+}
+
+
+
+
+.add-book-card{
+  display: flex;
+  background-color: #fff;
+  width: 900px;
+  height: auto;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+
+input{
+  height: 45px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  outline: none;
+  color: #40414a;
+  padding: 10px;
+
+  }
+  .sec-data{
+      display: flex;
+      margin: 20px;
+      flex-direction: column;
+  }
+  .sec-data div{
+      margin: 10px;
+  }
+
+  .add-sec-card{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+      background-color: #fff;
+  }
+
+  input[type="textarea"]{
+    height: 100px;
+    width: 100%;
+}
+
+
+
+
+/* request */
+.request{
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  width: 100%;
+}
+.btn-grp{
+  display: flex;
+  justify-content: space-around;
+}
+.req-heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.req-card{ 
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+
+}
+.container{
+  margin-top: 10px;
+}

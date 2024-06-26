@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <style>
+        /* Custom styles for the new color theme */
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding-top: 56px;
+        }
+        .navbar {
+            background-color: #f8f9fa;
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #333 !important;
+        }
+        .navbar-brand:hover, .navbar-nav .nav-link:hover {
+            color: #0056b3 !important;
+        }
+        .hero-section {
+            background-color: #e9ecef;
+            color: #333;
+            text-align: center;
+            padding: 100px 0;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .features-section, .how-it-works-section, .user-librarian-section, .stats-section, .newsletter-section {
+            padding: 50px 0;
+        }
+        .feature-card {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .how-it-works-step {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .stats-counter {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Library Management System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#user-librarian">User & Librarian Views</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">Stats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <h1 class="display-4">Welcome to the Library Management System</h1>
+            <p class="lead">Effortlessly manage and access your e-books with our comprehensive solution.</p>
+            <a href="/login" class="btn btn-primary btn-lg">Explore Project</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="text-center">Key Features</h2>
+            <div class="row">
+                <!-- User Management -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>User Management</h4>
+                        <p>Users can register, login, and manage their e-books. Features include requesting, reading, and returning e-books.</p>
+                    </div>
+                </div>
+                <!-- Librarian Dashboard -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Librarian Dashboard</h4>
+                        <p>Librarians can manage sections, add new e-books, issue and revoke access, and monitor e-book statuses.</p>
+                    </div>
+                </div>
+                <!-- Advanced Search -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Advanced Search</h4>
+                        <p>Users can search for e-books or sections by various criteria such as author, title, or section.</p>
+                    </div>
+                </div>
+                <!-- Feedback System -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Feedback System</h4>
+                        <p>Users can provide feedback on e-books, helping to improve the library's offerings.</p>
+                    </div>
+                </div>
+                <!-- Multi-Language Support -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Multi-Language Support</h4>
+                        <p>Our system supports multiple languages seamlessly with UTF-8 encoding.</p>
+                    </div>
+                </div>
+                <!-- Access Control -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Access Control</h4>
+                        <p>Librarians can easily control and monitor e-book access for different users, ensuring security and proper management.</p>
+                    </div>
+                </div>
+                <!-- Book Availability and Management -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Book Availability & Management</h4>
+                        <p>Check the availability of e-books and manage their status. Librarians can update the library with new entries and ensure proper categorization.</p>
+                    </div>
+                </div>
+                <!-- User Actions on Books -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>User Actions on Books</h4>
+                        <p>Users can perform various actions like viewing details, issuing, and returning e-books, providing a complete e-book management experience.</p>
+                    </div>
+                </div>
+                <!-- Category & Section Browsing -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Category & Section Browsing</h4>
+                        <p>Browse through different sections and categories to find e-books of interest. Efficient organization makes it easy to navigate the library.</p>
+                    </div>
+                </div>
+                <!-- Dashboard Statistics -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Dashboard Statistics</h4>
+                        <p>Get insights into library usage with detailed statistics on users, books, and transactions.</p>
+                    </div>
+                </div>
+                <!-- Activity Logs -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Activity Logs</h4>
+                        <p>Track and monitor activities within the library system, ensuring transparency and accountability.</p>
+                    </div>
+                </div>
+                <!-- Role Management -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card">
+                        <h4>Role Management</h4>
+                        <p>Manage roles for different users, allowing specific access and functionalities based on their roles within the system.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works-section bg-light">
+        <div class="container">
+            <h2 class="text-center">How It Works</h2>
+            <div class="row">
+                <div class="col-md-4 how-it-works-step">
+                    <i class="bi bi-person-plus"></i> <!-- For register -->
+                    <h4>Register</h4>
+                    <p>Create an account as a user or librarian to get started.</p>
+                </div>
+                <div class="col-md-4 how-it-works-step">
+                    <i class="bi bi-binoculars"></i> <!-- For browse -->
+                    <h4>Browse</h4>
+                    <p>Explore the extensive library and find e-books of interest.</p>
+                </div>
+                <div class="col-md-4 how-it-works-step">
+                    <i class="bi bi-gear"></i> <!-- For manage -->
+                    <h4>Manage</h4>
+                    <p>Users can request and return books, while librarians manage the library.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User & Librarian Views Section -->
+    <section id="user-librarian" class="user-librarian-section">
+        <div class="container">
+            <h2 class="text-center">User & Librarian Views</h2>
+            <div id="userLibrarianCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="static/images/user_dashboard.jpeg" class="d-block w-100" alt="User Interface">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>User Interface</h5>
+                            <p>Users can search for books, view their library, and manage their account.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="static/images/librarian_dashboard.jpeg" class="d-block w-100" alt="Librarian Dashboard">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Librarian Dashboard</h5>
+                            <p>Librarians have access to powerful tools to manage the library and monitor activities.</p>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#userLibrarianCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#userLibrarianCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats-section bg-light">
+        <div class="container">
+            <h2 class="text-center">Our Statistics</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stats-counter">
+                        <h3>10,000+</h3>
+                        <p>Books Available</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-counter">
+                        <h3>5,000+</h3>
+                        <p>Active Users</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-counter">
+                        <h3>500+</h3>
+                        <p>Daily Transactions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About the Project Section -->
+    <section id="about-the-project" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">About the Project</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <p>This project is developed as part of the Modern Application Development 1 course offered by IIT Madras. It aims to provide hands-on experience with the latest technologies in web development, focusing on building scalable and robust applications.</p>
+                    <p>The course is designed by industry experts and academicians from IIT Madras, ensuring a blend of theoretical knowledge and practical skills.</p>
+                    <a href="https://www.iitm.ac.in/" class="btn btn-outline-primary" target="_blank">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="my-experience" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">My Experience</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <p>Building this project as part of the Modern Application Development 1 course offered by IIT Madras has been an incredibly enriching experience. From conceptualization to deployment, every step presented its unique challenges and learning opportunities.</p>
+                    <p>Working with the latest web technologies allowed me to deepen my understanding of web development frameworks, responsive design, and state management. The hands-on approach of the course made it possible to apply theoretical knowledge in a practical setting, enhancing my problem-solving skills and creativity.</p>
+                    <!-- Continue with your existing content -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Form Section -->
+    <section id="contact" class="contact-section bg-light">
+        <div class="container">
+            <h2 class="text-center">Contact Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- footer-section-starts  -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; IITM BS Project by Avinash Shrivastava</span>
+    </div>
+  </footer>
+  <!-- footer-section-ends  -->
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

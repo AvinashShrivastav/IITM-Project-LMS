@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- navbar start -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" href="templates\user_mybooks.html">My Books</a>
+                <a class="nav-link" href="/admin_req">Book <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="templates\user_books.html">Books</a>
+                <a class="nav-link" href="#">Stats</a>
+            </div>
+            <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-light">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <!-- navbar end -->
+
+    <!-- main-section start -->
+    <div class="main">
+        <!-- search-box start-->
+        <div class="navbar">
+            <a class="navbar-brand">Book Requests</a>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Filter</button>
+            </form>
+        </div>
+        <!-- search-box end -->
+
+        <div class="book-listing">
+
+            <!-- requested books section starts here -->
+            <h2 class="navbar-brand">Requested</h2>
+            {% if requests %}
+            <table class="table table-hover table-bordered">
+                <thead class="bill-header cs">
+                    <tr>
+                        <th>Book title</th>
+                        <th>User</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                    <div>
+                        <tr>
+                            <td>{{ request.book.name }}</td>
+                            <td>{{ request.user.name }}</td>
+                            <td>
+                                <a href="/reject/{{ request.request_id }}" class="btn btn-danger"
+                                    type="button">Reject</a>
+                                <a href="/grant/{{ request.request_id }}" class="btn btn-success"
+                                    type="button">Grant</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modal-{{ request.request_id }}">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        <!-- Modal for each book -->
+                        <div class="modal fade" id="modal-{{ request.request_id }}" tabindex="-1" role="dialog"
+                            aria-labelledby="modalLabel-{{ request.request_id }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalLabel-{{ request.request_id }}">Request Details
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Book Name:</strong> {{ request.book.name }}</p>
+                                        <p><strong>Book Author(s):</strong>
+                                            {% if request.book.authors|length == 1 %}
+                                            {{ request.book.authors[0].name }}
+                                            {% else %}
+                                            {% for author in request.book.authors %}
+                                            {{ author.name }}
+                                            {% if not loop.last %},
+                                            {% endif %}
+                                            {% endfor %}
+                                            {%endif %}
+                                        <p><strong>User Name:</strong> {{ request.user.name }}</p>
+                                        <p><strong>Days Requested:</strong> {{ (request.return_date -
+                                            request.issue_date).days }}</p>
+                                        <p><strong>Book Section:</strong> {{ request.book.section.name }}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/reject/{{ request.request_id }}" class="btn btn-danger"
+                                            type="button">Reject</a>
+                                        <a href="/grant/{{ request.request_id }}" class="btn btn-success"
+                                            type="button">Grant</a>
+                                        <a href="/view/{{ request.book_id }}" class="btn btn-primary">View Book</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No requests available.</p>
+            {% endif %}
+            <!-- requested books section ends here -->
+
+
+            <!-- issued books section starts here  -->
+            <h2 class="navbar-brand">Issued</h2>
+            {% if issued %}
+            <table class="table table-hover table-bordered">
+                <thead class="bill-header cs">
+                    <tr>
+                        <th>Book title</th>
+                        <th>User</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for issue in issued%}
+
+                    <tr>
+                        <td>{{issue.book.name}}</td>
+                        <td>{{issue.user.name}}</td>
+                        <td>
+                            <a href="/revoke/{{issue.request_id}}" class="btn btn-danger" type="button">Revoke</a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modal-{{ issue.request_id }}">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!-- Modal for each book -->
+                    <div class="modal fade" id="modal-{{ issue.request_id }}" tabindex="-1" role="dialog"
+                        aria-labelledby="modalLabel-{{ issue.request_id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel-{{ issue.request_id }}">Request Details
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Book Name:</strong> {{ issue.book.name }}</p>
+                                    <p><strong>Book Author(s):</strong>
+                                        {% if issue.book.authors|length == 1 %}
+                                        {{ issue.book.authors[0].name }}
+                                        {% else %}
+                                        {% for author in issue.book.authors %}
+                                        {{ author.name }}
+                                        {% if not loop.last %},
+                                        {% endif %}
+                                        {% endfor %}
+                                        {%endif %}
+                                    </p>
+                                    <p><strong>User Name:</strong> {{ issue.user.name }}</p>
+                                    <p><strong>Days Requested:</strong> {{ (issue.return_date -
+                                        issue.issue_date).days }}</p>
+                                    <p><strong>Book Section:</strong> {{ issue.book.section.name }}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="/revoke/{{ request.request_id }}" class="btn btn-danger"
+                                        type="button">Reject</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No issued books to display.</p>
+            {% endif %}
+
+            <!-- issued books section ends here  -->
+        </div>
+
+    </div>
+    <!-- main-section end -->
+
+  <!-- footer-section-starts  -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; IITM BS Project by Avinash Shrivastava</span>
+    </div>
+  </footer>
+  <!-- footer-section-ends  -->
+
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="static/css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-- navbar -->
+
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="/librarian">Librarian Dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="/librarian">Dashboard</a>
+        <a class="nav-link" href="/books/{{user.id}}">Books</a>
+        <a class="nav-link" href="/admin_req/{{user.id}}">Book Requests</a>
+        <a class="nav-link" href="/userstats">Stats </a>
+        <a class="nav-link" href="/userprofile/{{user.id}}">{{user.name}}</a>
+      </div>
+      <div class="d-flex align-items-center">
+        <a  href="/" type="button" class="btn btn-light">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <!-- navbar end -->
+  <div class="main">
+      <!-- search-box start-->
+      <div class="navbar">
+        <a class="navbar-brand">Welcome to Dashboard!</a>
+        <form class="form-inline" action="/search/{{user.id}}" method="get">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Filter</button>
+        </form>
+    </div>
+    <!-- search-box end -->
+
+
+    <!-- if no section is present -->
+
+
+    <div class="books-sections">
+      <h5>Sections</h5>
+      <!-- Button to trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSectionModal">
+        Add Section
+      </button>
+
+
+      {% if sections | length == 0%}
+      <h4>Add sections to view</h4>
+
+      <!-- if sections are present -->
+
+      {% else %}
+
+      <!-- book-section-starts-here -->
+      <div class="book-section">
+        {% for section in sections %}
+        <div class="card bg-dark text-white" onclick="window.location.href = '/lib_book/{{user.id}}/{{section.id}}';">
+            <img class="sec-img" src="../static/images/history.jpeg" alt="Card image" >
+            <div class="card-img-overlay">
+                <h4 class="book-title">{{ section.name }}</h4>
+                <p class="book-sec">Created on {{ section.date_created.strftime('%Y-%m-%d') }}</p>
+                <p class="book-sec">{{ section.description }}</p>
+                <!-- <button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#addBookModal{{ section.id }}"
+                    data-section-id="{{ section.id }}">Add Book</button> -->
+            </div>
+        </div>
+
+        {% endfor %}
+      </div>
+
+      {% endif %}
+
+
+
+    </div>
+    <!-- book-section-ends -->
+
+  </div>
+  <!-- main-section end -->
+
+  <!-- Add section Modal -->
+  <div class="modal fade" id="addSectionModal" tabindex="-1" role="dialog" aria-labelledby="addSectionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSectionModalLabel">Add Section</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/add_section" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="sec_title">Title:</label>
+              <input type="text" name="sec_title" id="sec_title" class="form-control" placeholder="Section_History">
+            </div>
+            <div class="form-group">
+              <label for="sec_date">Date:</label>
+              <input type="date" name="sec_date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="sec_img">Image:</label>
+              <input type="file" name="sec_img" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="sec_desc">Description:</label>
+              <input type="text" name="sec_desc" class="form-control" placeholder="Enter section description here">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast Message -->
+  <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 11">
+    <div id="toastMessage" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+      <div class="toast-body bg-success text-white">
+        Book added successfully!
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+
+    $(document).ready(function () {
+
+
+      // Clear form data when modal is closed
+      $('#addSectionModal').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+      });
+
+      // Show toast message when book is added successfully
+      $('#addBookBtn').click(function () {
+        $('#toastMessage').toast('show');
+      });
+    });
+
+  </script>
+
+
+  <!-- footer-section-starts  -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; IITM BS Project by Avinash Shrivastava</span>
+    </div>
+  </footer>
+  <!-- footer-section-ends  -->
+</body>
+
+</html>

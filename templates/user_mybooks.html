@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+  <!-- navbar start -->
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="/user/{{user.id}}">My Books <span
+            class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/books{{user.id}}">Books</a>
+        <a class="nav-link" href="/userstats">Stats</a>
+        <a class="nav-link" href="/userprofile/{{user.id}}">{{user.name}}</a>
+      </div>
+      <div class="d-flex align-items-center">
+        <a href="/login" class="btn btn-light">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <!-- navbar end -->
+
+  <!-- main-section start -->
+  <div class="main">
+
+    <!-- search-box start-->
+    <div class="navbar">
+      <a class="navbar-brand">My Books</a>
+      <form class="form-inline" action="/search" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Filter</button>
+      </form>
+    </div>
+    <!-- search-box end -->
+
+
+    <div class="book-listing">
+      {% if user.books | length == 0 %}
+      <h5>You have not read any books! </h5>
+      {% else %}
+      <!-- current books section starts here -->
+      <h2 class="navbar-brand">Current</h2>
+      {% if issued_books %}
+      <table class="table table-hover table-bordered">
+        <thead class="bill-header cs">
+          <tr>
+            <th>SL. No.</th>
+            <th>Book title</th>
+            <th>Author</th>
+            <th>Section</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in issued_books %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ book.book.name }}</td>
+            <td>
+              {% for author in book.book.authors %}
+              {% if loop.last %}
+              {{ author.name }}
+              {% else %}
+              {{ author.name }},
+              {% endif %}
+              {% endfor %}
+            </td>
+            <td>{{ book.book.section.name }}</td>
+            <td>
+              <a href="/return/{{book.request_id}}" class="btn btn-warning" title="Return">
+                <i class="bi bi-arrow-return-left"></i>
+              </a>
+              <a href="/download/{{book.book.id}}" class="btn btn-primary" title="Download">
+                <i class="bi bi-download"></i>
+              </a>
+              <a href="/viewbook/{{book.book.id}}" class="btn btn-success" title="View">
+                <i class="bi bi-eye"></i>
+              </a>
+              <a href="#" class="btn btn-info" title="Feedback" data-toggle="modal"
+                data-target="#feedbackModal-{{book.book.id}}">
+                <i class="bi bi-chat-text"></i>
+              </a>
+            </td>
+
+            <!-- feedback modal starts here -->
+            <div class="modal fade" id="feedbackModal-{{book.book.id}}" tabindex="-1" role="dialog"
+              aria-labelledby="feedbackModalLabel-{{book.book.id}}" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel-{{book.book.id}}">Submit Feedback</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/submit_feedback/{{book.request_id}}" method="POST">
+                      <div class="form-group">
+                        <label for="feedbackText-{{book.book.id}}">Feedback</label>
+                        <textarea class="form-control" id="feedbackText-{{book.book.id}}" name="feedback"
+                          rows="3"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No books have been issued to you at this time.</p>
+      {% endif %}
+
+      <!-- current books section ends here  -->
+
+      <!-- hold books section starts here -->
+      <h2 class="navbar-brand">Books on hold</h2>
+      {% if hold_books %}
+      <div class="table-responsive table table-hover table-bordered results">
+        <table class="table table-hover table-bordered">
+          <thead class="bill-header cs">
+            <tr>
+              <th>SL. No.</th>
+              <th>Book title</th>
+              <th>Author</th>
+              <th>Section</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book in hold_books %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ book.book.name }}</td>
+              <td>
+                {% for author in book.book.authors %}
+                {% if loop.last %}
+                {{ author.name }}
+                {% else %}
+                {{ author.name }},
+                {% endif %}
+                {% endfor %}
+              </td>
+              <td>{{ book.book.section.name }}</td>
+              <td>
+                <a href="/cancelrequest/{{book.request_id}}" class="btn btn-warning" title="Cancel Request">
+                  <i class="bi bi-x-circle"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No books are currently on hold.</p>
+      {% endif %}
+      <!-- hold books section ends here -->
+
+      <!-- completed books section starts here -->
+      <h2 class="navbar-brand">Completed</h2>
+      {% if returned_books %}
+      <div class="table-responsive table table-hover table-bordered results">
+        <table class="table table-hover table-bordered">
+          <thead class="bill-header cs">
+            <tr>
+              <th>SL. No.</th>
+              <th>Book title</th>
+              <th>Author</th>
+              <th>Section</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for book in returned_books %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ book.book.name }}</td>
+              <td>
+                {% for author in book.book.authors %}
+                {% if loop.last %}
+                {{ author.name }}
+                {% else %}
+                {{ author.name }},
+                {% endif %}
+                {% endfor %}
+              </td>
+              <td>{{ book.book.section.name }}</td>
+              <td>
+                <a href="/viewbookhistory/{{book.user.id}}/{{book.book.id}}" class="btn btn-warning"
+                  title="View History">
+                  <i class="bi bi-clock-history"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No completed books to display.</p>
+      {% endif %}
+      <!-- completed books section ends here -->
+      {% endif %}
+    </div>
+
+
+
+
+
+  </div>
+  <!-- main-section end -->
+
+
+
+
+
+  <!-- footer-section-starts  -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; IITM BS Project by Avinash Shrivastava</span>
+    </div>
+  </footer>
+  <!-- footer-section-ends  -->
+
+</body>
+
+</html>

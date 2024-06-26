@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+
+    <!-- navbar -->
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="templates\user_mybooks.html">My Books</a>
+            <a class="nav-link active" href="templates\user_books.html">Books <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Stats</a>
+            <a class="nav-link" href="#">{{user.name}}</a>
+          </div>
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-light">Logout</button>
+          </div>
+        </div>
+      </nav>        
+    <!-- navbar end -->
+
+    <!-- main-section start -->
+    <div class="main">
+        <!-- search-box -->
+        <div class="navbar">
+            <a class="navbar-brand">Books</a>
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query">
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Filter</button>
+            </form>
+        </div>
+        <!-- search-box -->
+
+
+        <!-- book-section starts -->
+        {% if books | length == 0 %}
+        <h5>No matching book or author! </h5>
+        {% else %}
+        <div class="book-section">
+          {%for book in books%}
+          <div class="book-card">
+            <div class="book-img">
+              <img src="../static/images/Designer.jpeg" alt="book-image">
+            </div>
+            <div class="book-desc">
+              <h5 class="book-title">{{book.name}}</h5>
+              {% for author in book.authors %}
+              <p class="book-author">{{author.name}}</p>
+              {% endfor %}
+              <p class="book-sec">{{book.section.name}}</p>
+              <a href="/request/{{user.id}}/{{book.id}}" class="btn btn-outline-primary"> Request</a>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+        {% endif %}
+        <!-- book-section ends -->
+
+    </div>
+    <!-- main-section end -->
+
+  <!-- footer-section-starts  -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; IITM BS Project by Avinash Shrivastava</span>
+    </div>
+  </footer>
+  <!-- footer-section-ends  -->
+
+
+</body>
+</html>
