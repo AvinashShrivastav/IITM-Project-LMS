@@ -24,7 +24,7 @@ from application.controllers import *
 
 # api.add_resource(UserAPI, '/user/<string:username>')
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
 
     
